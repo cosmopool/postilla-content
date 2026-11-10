@@ -1,0 +1,49 @@
+uuid: d0159518-99cc-46f0-bef2-b5b6f6f9a76d
+title: Il treno per Bologna
+subtitle: Marta va a trovare la nonna dopo due anni.
+level: A2
+genre: viaggio
+
+Marta arriva in stazione alle sette.
+Il binario è quasi vuoto e l'aria sa di caffè.
+Compra un biglietto alla macchinetta e si siede vicino al finestrino.
+--
+Marta chega à estação às sete.
+A plataforma está quase vazia e o ar cheira a café.
+Ela compra uma passagem na máquina e se senta perto da janela.
+
+Il treno parte in orario.
+Fuori, la città si sveglia piano: un ragazzo in bicicletta, una signora con il cane, le serrande dei negozi che si alzano.
+--
+O trem sai no horário.
+Lá fora, a cidade acorda devagar: um rapaz de bicicleta, uma senhora com o cachorro, as portas de aço das lojas subindo.
+
+Accanto a lei c'è un uomo anziano che legge il giornale.
+A un certo punto la guarda e chiede: «Va anche lei a Bologna?»
+Marta sorride e risponde di sì.
+Va a trovare sua nonna, che non vede da due anni.
+--
+Ao lado dela há um senhor idoso lendo o jornal.
+Em certo momento, ele olha para ela e pergunta: “A senhora também vai para Bolonha?”
+Marta sorri e responde que sim.
+Vai visitar a avó, que não vê há dois anos.
+
+L'uomo piega il giornale.
+«Allora deve assaggiare i tortellini di via Pescherie Vecchie», dice.
+«Ma non lo dica a sua nonna.
+Le nonne vogliono sempre cucinare loro.»
+--
+O homem dobra o jornal.
+“Então a senhora precisa provar os tortellini da via Pescherie Vecchie”, diz.
+“Mas não conte para a sua avó.
+As avós sempre querem cozinhar elas mesmas.”
+
+Marta ride.
+Guarda di nuovo fuori dal finestrino.
+Le colline sono verdi e il cielo è chiaro.
+Per la prima volta da molto tempo, non ha fretta.
+--
+Marta ri.
+Olha de novo pela janela.
+As colinas estão verdes e o céu está claro.
+Pela primeira vez em muito tempo, ela não tem pressa.

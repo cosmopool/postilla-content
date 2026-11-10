@@ -1,0 +1,7 @@
+quotidiano | Cotidiano | Quotidiano
+famiglia | Família | Famiglia
+viaggio | Viagem | Viaggio
+mistero | Mistério | Mistero
+lettere | Cartas | Lettere
+racconto | Conto | Racconto
+classici | Clássicos | Classici

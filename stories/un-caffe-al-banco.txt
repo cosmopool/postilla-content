@@ -1,0 +1,105 @@
+uuid: edb652ff-3c82-490a-96c2-a5c24eebd9f9
+title: Un caffè al banco
+subtitle: Come si ordina un caffè in un bar italiano.
+level: A1
+genre: quotidiano
+
+Sono le otto di mattina.
+Ana è a Roma da tre giorni.
+È brasiliana e studia l'italiano.
+Oggi vuole fare colazione in un bar vicino all'albergo.
+--
+São oito da manhã.
+Ana está em Roma há três dias.
+Ela é brasileira e estuda italiano.
+Hoje ela quer tomar café da manhã num bar perto do hotel.
+
+Il bar è piccolo e pieno di gente.
+Nessuno è seduto ai tavoli.
+Tutti sono in piedi, davanti al banco.
+Parlano, ridono, bevono il caffè in pochi secondi e poi vanno via.
+--
+O bar é pequeno e cheio de gente.
+Ninguém está sentado às mesas.
+Todos estão em pé, na frente do balcão.
+Conversam, riem, bebem o café em poucos segundos e depois vão embora.
+
+Ana va al banco e aspetta.
+Il barista è un ragazzo alto, con una camicia bianca.
+«Buongiorno, ha lo scontrino?», chiede.
+Ana non capisce.
+Che cos'è lo scontrino?
+--
+Ana vai até o balcão e espera.
+O barista é um rapaz alto, de camisa branca.
+“Bom dia, você tem o comprovante?”, ele pergunta.
+Ana não entende.
+O que é o comprovante?
+
+Un signore vicino a lei sorride.
+«In questo bar prima si paga alla cassa», spiega.
+«Lì riceve lo scontrino, e poi lo dà al barista.»
+La cassa è vicino alla porta.
+--
+Um senhor perto dela sorri.
+“Neste bar, primeiro se paga no caixa”, explica.
+“Lá você recebe o comprovante e depois entrega para o barista.”
+O caixa fica perto da porta.
+
+Ana ringrazia e va alla cassa.
+C'è una signora con gli occhiali, molto gentile.
+«Un cappuccino e un cornetto, per favore», dice Ana.
+«Due euro e cinquanta», risponde la signora.
+Ana paga e prende lo scontrino.
+--
+Ana agradece e vai até o caixa.
+Lá está uma senhora de óculos, muito simpática.
+“Um cappuccino e um croissant, por favor”, diz Ana.
+“Dois euros e cinquenta”, responde a senhora.
+Ana paga e pega o comprovante.
+
+Torna al banco e dà lo scontrino al barista.
+Lui prepara il cappuccino in un minuto.
+Il latte è caldo, con tanta schiuma.
+Il cornetto è morbido e ha la crema dentro.
+Vicino alla tazza, il barista mette anche un bicchiere d'acqua.
+--
+Ela volta ao balcão e entrega o comprovante ao barista.
+Ele prepara o cappuccino em um minuto.
+O leite está quente, com bastante espuma.
+O croissant é macio e tem creme dentro.
+Ao lado da xícara, o barista põe também um copo d'água.
+
+Ana beve in piedi, come gli altri.
+Il signore di prima ordina «un caffè».
+Il barista gli dà una tazzina piccola piccola, con un caffè nero e forte.
+Il signore lo beve in due sorsi.
+Ana capisce: in Italia, «un caffè» è un espresso.
+--
+Ana bebe em pé, como os outros.
+O senhor de antes pede “um café”.
+O barista dá para ele uma xicrinha bem pequena, com um café preto e forte.
+O senhor bebe em dois goles.
+Ana entende: na Itália, “um café” é um espresso.
+
+«Domani prendo un caffè anche io», dice Ana al signore.
+«Brava», risponde lui.
+«E se vuole stare seduta al tavolo, paga un po' di più.»
+Poi alza un dito, serio.
+«Ma dopo pranzo niente cappuccino, mi raccomando!»
+--
+“Amanhã eu também vou pedir um café”, diz Ana ao senhor.
+“Muito bem”, responde ele.
+“E se quiser ficar sentada à mesa, paga um pouco mais.”
+Depois ele levanta um dedo, sério.
+“Mas depois do almoço, nada de cappuccino, hein!”
+
+Ana ride e saluta il barista e il signore.
+Esce dal bar contenta.
+La sua prima colazione italiana: cinque minuti, in piedi, al banco.
+Fuori, Roma è già piena di rumore e di sole.
+--
+Ana ri e se despede do barista e do senhor.
+Sai do bar contente.
+O primeiro café da manhã italiano dela: cinco minutos, em pé, no balcão.
+Lá fora, Roma já está cheia de barulho e de sol.
