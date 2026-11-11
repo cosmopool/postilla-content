@@ -13,13 +13,13 @@ pub fn main(init: std.process.Init) !void {
     const args = try init.minimal.args.toSlice(init.arena.allocator());
     const cmd = if (args.len > 1) std.meta.stringToEnum(Command, args[1]) else null;
     switch (cmd orelse {
-        std.debug.print("uso: postilla-content <fetch|dict|stories|pack>\n", .{});
+        std.debug.print("uso: postilla-content <fetch|dict|stories|pack [dict|stories]>\n", .{});
         std.process.exit(2);
     }) {
         .fetch => try fetch(init.io, init.gpa),
         .dict => try dict.build(init.io, init.gpa),
         .stories => try stories.build(init.io, init.gpa),
-        .pack => try pack(init.io, init.gpa),
+        .pack => try pack(init.io, init.gpa, if (args.len > 2) args[2] else null),
     }
 }
 
@@ -70,7 +70,8 @@ fn fetch(io: Io, gpa: std.mem.Allocator) !void {
 
 /// gzip -9 de cada `.db` de `out/` e um `out/SHA256SUMS` com o `.db` e o `.gz`.
 /// Os pacotes saem com a versão no nome (`dict-1.0.0.db.gz`), como o lock do app espera.
-fn pack(io: Io, gpa: std.mem.Allocator) !void {
+/// Com `only`, empacota só aquele pacote (a Release de uma tag `dict-v…` leva só o `dict`).
+fn pack(io: Io, gpa: std.mem.Allocator, only: ?[]const u8) !void {
     _ = gpa;
     const cwd = Io.Dir.cwd();
     const packages = [_]struct { name: []const u8, version: []const u8 }{
@@ -79,7 +80,14 @@ fn pack(io: Io, gpa: std.mem.Allocator) !void {
     };
     var sums: [4096]u8 = undefined;
     var sums_len: usize = 0;
+    if (only) |name| for (packages) |p| {
+        if (std.mem.eql(u8, p.name, name)) break;
+    } else {
+        std.debug.print("pacote desconhecido: {s}\n", .{name});
+        std.process.exit(2);
+    };
     for (packages) |p| {
+        if (only) |name| if (!std.mem.eql(u8, p.name, name)) continue;
         var db_buf: [64]u8 = undefined;
         var gz_buf: [64]u8 = undefined;
         const db_path = try std.fmt.bufPrint(&db_buf, "out/{s}.db", .{p.name});

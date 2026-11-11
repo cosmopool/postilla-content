@@ -6,7 +6,7 @@ O que o app Postilla lê dos bancos gerados aqui (ARQ-07). Mudança incompatíve
 zig build run -- fetch     baixa as fontes em data/
 zig build run -- dict      out/dict.db
 zig build run -- stories   out/stories.db
-zig build run -- pack      out/<pacote>-<versão>.db.gz e out/SHA256SUMS
+zig build run -- pack [p]  out/<pacote>-<versão>.db.gz e out/SHA256SUMS (só o pacote p, se dado)
 zig build test
 ```
 
@@ -19,6 +19,30 @@ zig build test
 | `SHA256SUMS` | sha256 do `.db` e do `.db.gz` de cada pacote |
 
 A versão de cada pacote está em `meta.version` e no nome do arquivo.
+
+## Releases e manifesto
+
+Uma tag por pacote e versão: `dict-v1.1.0`, `stories-v1.2.0`. A versão da tag é a de `version` em `src/<pacote>.zig`, senão o workflow `release` falha. Cada Release leva `<pacote>-<versão>.db.gz`, `SHA256SUMS` e `<pacote>-<versão>.json` (a entrada do manifesto).
+
+O manifesto (ARQ-06, ARQ-20) fica em `https://postilla.kaiodelphino.com/content/manifest.json`, no Pages deste repositório. A cada Release ele é refeito com a maior versão publicada de cada pacote. Pacote sem Release não aparece.
+
+```json
+{
+  "packages": {
+    "dict": {
+      "version": "1.0.0",
+      "url": "https://github.com/cosmopool/postilla-content/releases/download/dict-v1.0.0/dict-1.0.0.db.gz",
+      "size": 22829235,
+      "gz_sha256": "…",
+      "db_sha256": "…",
+      "db_size": 88629248
+    },
+    "stories": { "…": "…" }
+  }
+}
+```
+
+`size` e `gz_sha256` são do `.db.gz` baixado; `db_sha256` e `db_size`, do `.db` descomprimido.
 
 ## `dict`
 

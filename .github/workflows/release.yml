@@ -1,0 +1,129 @@
+# Publica um pacote por tag e o manifesto que o app consulta (ARQ-05, ARQ-06, ARQ-20).
+#
+#   git tag dict-v1.1.0 && git push origin dict-v1.1.0
+#   git tag stories-v1.2.0 && git push origin stories-v1.2.0
+#
+# A versão da tag tem de bater com `version` em src/<pacote>.zig. A Release leva
+# <pacote>-<versão>.db.gz, SHA256SUMS e <pacote>-<versão>.json (a entrada do manifesto).
+# Depois, o manifesto é refeito com a maior versão publicada de cada pacote e vai
+# para o Pages em /content/manifest.json. Formato em CONTRACT.md.
+name: release
+
+on:
+  push:
+    tags: ["dict-v*", "stories-v*"]
+  workflow_dispatch: # só refaz o manifesto
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  package:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pacote e versão da tag
+        id: tag
+        run: |
+          tag="$GITHUB_REF_NAME"
+          pkg="${tag%%-v*}"
+          ver="${tag#*-v}"
+          if ! [[ "$ver" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::$tag: a versão precisa ser X.Y.Z"; exit 1
+          fi
+          src=$(sed -n 's/^pub const version = "\(.*\)";$/\1/p' "src/$pkg.zig")
+          if [ "$src" != "$ver" ]; then
+            echo "::error::$tag, mas src/$pkg.zig está em $src"; exit 1
+          fi
+          echo "pkg=$pkg" >> "$GITHUB_OUTPUT"
+          echo "ver=$ver" >> "$GITHUB_OUTPUT"
+
+      - uses: mlugg/setup-zig@v2 # versão do minimum_zig_version do build.zig.zon
+
+      - run: zig build test
+
+      # As fontes do dict têm ~165 MB; o kaikki-it não tem URL por data, então o
+      # cache também mantém o mesmo arquivo entre builds até mudarem as fontes.
+      - name: Cache das fontes
+        if: steps.tag.outputs.pkg == 'dict'
+        uses: actions/cache@v4
+        with:
+          path: data
+          key: data-${{ hashFiles('src/main.zig') }}
+
+      - name: Baixa as fontes
+        if: steps.tag.outputs.pkg == 'dict'
+        run: zig build run -- fetch
+
+      - name: Gera e empacota
+        run: |
+          zig build run -- ${{ steps.tag.outputs.pkg }}
+          zig build run -- pack ${{ steps.tag.outputs.pkg }}
+
+      - name: Entrada do manifesto
+        env:
+          PKG: ${{ steps.tag.outputs.pkg }}
+          VER: ${{ steps.tag.outputs.ver }}
+        run: |
+          gz="out/$PKG-$VER.db.gz"
+          db="out/$PKG.db"
+          jq -n \
+            --arg version "$VER" \
+            --arg url "https://github.com/$GITHUB_REPOSITORY/releases/download/$GITHUB_REF_NAME/$PKG-$VER.db.gz" \
+            --argjson size "$(stat -c %s "$gz")" \
+            --arg gz_sha256 "$(sha256sum "$gz" | cut -d' ' -f1)" \
+            --arg db_sha256 "$(sha256sum "$db" | cut -d' ' -f1)" \
+            --argjson db_size "$(stat -c %s "$db")" \
+            '{$version, $url, $size, $gz_sha256, $db_sha256, $db_size}' > "out/$PKG-$VER.json"
+          cat "out/$PKG-$VER.json"
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PKG: ${{ steps.tag.outputs.pkg }}
+          VER: ${{ steps.tag.outputs.ver }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "out/$PKG-$VER.db.gz" out/SHA256SUMS "out/$PKG-$VER.json" \
+            --title "$PKG $VER" \
+            --notes "$(printf '```\n%s\n```' "$(cat out/SHA256SUMS)")"
+
+  manifest:
+    needs: package
+    if: always() && (needs.package.result == 'success' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}content/manifest.json
+    steps:
+      - name: Monta o manifesto
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mkdir -p site/content entries
+          tags=$(gh release list --limit 1000 --exclude-drafts --exclude-pre-releases --json tagName --jq '.[].tagName')
+          for pkg in dict stories; do
+            tag=$(printf '%s\n' "$tags" | grep -E "^$pkg-v[0-9]+\.[0-9]+\.[0-9]+$" | sort -V | tail -n1 || true)
+            [ -n "$tag" ] || continue
+            gh release download "$tag" --pattern "$pkg-*.json" --output "entries/$pkg.json"
+          done
+          jq -n '{packages: (reduce inputs as $e ({}; . + {(input_filename | ltrimstr("entries/") | rtrimstr(".json")): $e}))}' \
+            entries/*.json > site/content/manifest.json
+          cat site/content/manifest.json
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
